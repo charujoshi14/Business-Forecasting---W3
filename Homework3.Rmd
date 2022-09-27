@@ -1,0 +1,40 @@
+library(fpp)
+library(fpp2)
+
+#1 Choose data from data set fpp
+
+data = fpp::cafe
+#2 Describe
+# Data is Quarterly expenditure on eating out and take away food in Australia from 1982 to 2010
+#We can observe that there is a trend in the time series and it is constantly increasing through the quarters.
+
+
+
+
+#3 
+
+plot(data)
+# We can also observe that since the time series is increasing constantly, there must be significant positive autocorrelation structure 
+#in the time series
+
+
+#4
+
+Acf(data)
+# We can verify our claim that the time series has significant positive correlation structure with 
+# gradually decaying effect as we go back in time. Particularly, the autocorrelation is positive and significant till lag 20.
+
+#5 HoltWinters model
+res <- HoltWinters(data)
+attributes(res)
+plot(res)
+res_forecast <- forecast(res)
+attributes(res_forecast)
+plot(res_forecast$residuals)
+hist(res_forecast$residuals)
+Acf(res_forecast$residuals)
+accuracy(res_forecast)
+
+
+#Length of Data
+#The cafe data taken is of full length of 20 years as the data followed similar trajectory and the fitted model has good accuracy on this data.
